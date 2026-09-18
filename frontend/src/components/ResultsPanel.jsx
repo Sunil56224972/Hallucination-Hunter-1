@@ -5,11 +5,10 @@ const STEP_LABELS = {
   extracting: 'Extracting factual claims…',
   verifying: 'Cross-referencing each claim…',
   scoring: 'Computing reliability scores…',
-  saving: 'Saving results…',
   done: 'Analysis complete',
 };
 
-const STEP_ORDER = ['extracting', 'verifying', 'scoring', 'saving', 'done'];
+const STEP_ORDER = ['extracting', 'verifying', 'scoring', 'done'];
 
 export default function LoadingState({ currentStep }) {
   const [elapsed, setElapsed] = useState(0);
@@ -62,7 +61,7 @@ export function ResultsPanel({ results }) {
     'var(--fabricated)';
 
   const circumference = 2 * Math.PI * 34;
-  const offset = circumference - (overall_score * circumference);
+  const offset = circumference - overall_score * circumference;
 
   return (
     <div className="results-section">

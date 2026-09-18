@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Brain, Target, BarChart3, Database, Zap, Shield } from 'lucide-react';
+import { Brain, Target, BarChart3, Zap, Shield } from 'lucide-react';
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -22,7 +22,7 @@ export default function About() {
             number="01"
             icon={<Brain size={20} />}
             title="Claim Extraction"
-            description="The input text is analyzed by Llama 3.3 70B to identify individual factual claims — dates, statistics, named entities, causal relationships, and scientific assertions."
+            description="The input text is analyzed by Llama 3 70B to identify individual factual claims — dates, statistics, named entities, causal relationships, and scientific assertions."
           />
           <StepCard
             number="02"
@@ -36,12 +36,6 @@ export default function About() {
             title="Confidence Scoring"
             description="Every verdict includes a confidence percentage. Claims are categorized as Verified, Suspicious, Fabricated, or Unverifiable with detailed explanations."
           />
-          <StepCard
-            number="04"
-            icon={<Database size={20} />}
-            title="Persistent Storage"
-            description="All analyses are saved to a Supabase PostgreSQL database, letting you review past checks and track patterns over time."
-          />
         </div>
 
         <div style={{ marginTop: '56px', padding: '28px', background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', backdropFilter: 'blur(12px)' }}>
@@ -51,9 +45,8 @@ export default function About() {
           </h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
             {[
-              { label: 'LLM Engine', value: 'Groq (Llama 3.3 70B)', icon: '⚡' },
+              { label: 'LLM Engine', value: 'Groq (Llama 3 70B)', icon: '⚡' },
               { label: 'Frontend', value: 'React + Vite', icon: '⚛️' },
-              { label: 'Backend', value: 'Supabase (PostgreSQL)', icon: '🗄️' },
               { label: 'Styling', value: 'Vanilla CSS', icon: '🎨' },
               { label: 'Animations', value: 'Framer Motion', icon: '✨' },
               { label: 'Icons', value: 'Lucide React', icon: '🎯' },
