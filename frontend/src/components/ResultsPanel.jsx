@@ -5,11 +5,10 @@ const STEP_LABELS = {
   extracting: 'Extracting factual claims…',
   verifying: 'Cross-referencing each claim…',
   scoring: 'Computing reliability scores…',
-  saving: 'Saving results…',
   done: 'Analysis complete',
 };
 
-const STEP_ORDER = ['extracting', 'verifying', 'scoring', 'saving', 'done'];
+const STEP_ORDER = ['extracting', 'verifying', 'scoring', 'done'];
 
 export default function LoadingState({ currentStep }) {
   const [elapsed, setElapsed] = useState(0);
@@ -33,7 +32,6 @@ export default function LoadingState({ currentStep }) {
           let status = 'pending';
           if (i < currentIndex) status = 'done';
           else if (i === currentIndex) status = 'active';
-
           return (
             <div key={step} className={`loading-step ${status}`}>
               <span className="step-icon">
@@ -48,13 +46,10 @@ export default function LoadingState({ currentStep }) {
   );
 }
 
-/* ================================ */
-
 export function ResultsPanel({ results }) {
   if (!results) return null;
 
   const { overall_score, total_claims, verified_claims, suspicious_claims, fabricated_claims, claims } = results;
-
   const scorePercent = Math.round(overall_score * 100);
   const scoreColor =
     scorePercent >= 75 ? 'var(--verified)' :
@@ -62,7 +57,7 @@ export function ResultsPanel({ results }) {
     'var(--fabricated)';
 
   const circumference = 2 * Math.PI * 34;
-  const offset = circumference - (overall_score * circumference);
+  const offset = circumference - overall_score * circumference;
 
   return (
     <div className="results-section">
@@ -87,29 +82,15 @@ export function ResultsPanel({ results }) {
               style={{ transition: 'stroke-dashoffset 1s var(--ease-out)' }}
             />
           </svg>
-          <span className="score-value" style={{ color: scoreColor }}>
-            {scorePercent}
-          </span>
+          <span className="score-value" style={{ color: scoreColor }}>{scorePercent}</span>
         </div>
       </div>
 
       <div className="stats-row">
-        <div className="stat-card total">
-          <span className="stat-label">Total Claims</span>
-          <span className="stat-value">{total_claims}</span>
-        </div>
-        <div className="stat-card verified">
-          <span className="stat-label">Verified</span>
-          <span className="stat-value">{verified_claims}</span>
-        </div>
-        <div className="stat-card suspicious">
-          <span className="stat-label">Suspicious</span>
-          <span className="stat-value">{suspicious_claims}</span>
-        </div>
-        <div className="stat-card fabricated">
-          <span className="stat-label">Fabricated</span>
-          <span className="stat-value">{fabricated_claims}</span>
-        </div>
+        <div className="stat-card total"><span className="stat-label">Total Claims</span><span className="stat-value">{total_claims}</span></div>
+        <div className="stat-card verified"><span className="stat-label">Verified</span><span className="stat-value">{verified_claims}</span></div>
+        <div className="stat-card suspicious"><span className="stat-label">Suspicious</span><span className="stat-value">{suspicious_claims}</span></div>
+        <div className="stat-card fabricated"><span className="stat-label">Fabricated</span><span className="stat-value">{fabricated_claims}</span></div>
       </div>
 
       <div className="claims-list">
@@ -120,8 +101,6 @@ export function ResultsPanel({ results }) {
     </div>
   );
 }
-
-/* ================================ */
 
 function ClaimCard({ claim, index }) {
   const VerdictIcon = {
@@ -147,21 +126,14 @@ function ClaimCard({ claim, index }) {
           {claim.verdict}
         </span>
       </div>
-
-      {claim.explanation && (
-        <p className="claim-explanation">{claim.explanation}</p>
-      )}
-
+      {claim.explanation && <p className="claim-explanation">{claim.explanation}</p>}
       <div className="confidence-bar-wrapper">
         <div className="confidence-bar-label">
           <span>Confidence</span>
           <span style={{ fontFamily: 'var(--font-mono)' }}>{confidence}%</span>
         </div>
         <div className="confidence-bar">
-          <div
-            className={`confidence-bar-fill ${claim.verdict}`}
-            style={{ width: `${confidence}%` }}
-          />
+          <div className={`confidence-bar-fill ${claim.verdict}`} style={{ width: `${confidence}%` }} />
         </div>
       </div>
     </div>

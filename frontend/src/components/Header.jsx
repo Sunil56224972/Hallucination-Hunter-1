@@ -1,9 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Search, History, Info } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 export default function Header() {
   const location = useLocation();
-
   const isActive = (path) => location.pathname === path ? 'active' : '';
 
   return (
@@ -20,7 +19,6 @@ export default function Header() {
 
         <nav className="header-nav">
           <Link to="/" className={isActive('/')}>Analyzer</Link>
-          <Link to="/history" className={isActive('/history')}>History</Link>
           <Link to="/about" className={isActive('/about')}>About</Link>
         </nav>
 
